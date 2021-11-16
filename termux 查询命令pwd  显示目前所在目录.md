@@ -27,8 +27,9 @@ EVAL        ping         www99
 
 ~/vld-0.14.0 $  cd
 
-~ $
+
 ~ $ ls $PREFIX
+
 
 0000  bin  include  libexec  share  var
 6666  etc  lib      opt      tmp
