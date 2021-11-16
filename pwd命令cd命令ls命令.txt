@@ -30,3 +30,11 @@ EVAL        ping         www99
 
 /data/data/com.termux/files/usr
 .../files/usr $
+
+
+
+
+
+
+
+
