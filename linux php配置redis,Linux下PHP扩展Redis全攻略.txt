@@ -1,0 +1,119 @@
+
+https://blog.csdn.net/weixin_36379084/article/details/115117306
+
+linux php配置redis,Linux下PHP扩展Redis全攻略 转载
+2021-03-09 18:56
+
+kimi的萌miki 
+
+
+
+翻遍网上各种各样的安装教程，问题不断。
+
+折腾两天后终于搞定这玩意，
+
+在此，将遇到的一些可以避免的弯路给大家总结出来。
+
+php安装目录缺少文件夹的同学！安装完phpRedis后phpinfo中没有redis扩展的同学！来瞧一瞧说不定能解决你的问题！
+
+以下用红色标注的是我卡了很久的地方
+
+一、安装php(如果php有问题建议删掉重装)
+
+*1，首先从官网http://cn2.php.net/downloads.php 下载php源码后解压，
+
+*2，编译安装php(make install需要root)
+
+# cd /php-NN    (PHP解压目录，即源码目录)
+
+# ./configure  --prefix=/usr/local/php --with-MySQL=mysqlnd --with-mysqli=mysqlnd  --with-pdo-mysql=mysqlnd  --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --with-mcrypt  --enable-mbregex --enable-fpm --enable-mbstring --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --enable-ftp --with-apxs2=/usr/local/apache2/bin/apxs
+
+(*注意此步的config需要许多参数，否则make install后的安装目录将缺少很多文件夹。
+
+config执行的过程中注意看最后一步是否出现error，如果出现则说明缺少一些php需要的包。
+
+比如jpeg，png，prce等，将错误复制到google查一下然后下载对应的包即可。)
+
+# make
+
+# make install  (这个命令执行后系统将在/usr/local下创建php的安装目录)
+
+到此需要注意两个目录，一是php的源码目录(应该是在/home/xxx下)，二是php的安装目录(在/usr/local下)
+
+*3，配置php.ini
+
+# cp php.ini-development /usr/local/lib/php.ini (别忘了)
+
+# vim /usr/local/lib/php.ini
+
+在其中加入一句(随便在哪加都可以，网上有中说法是要加[redis]，其实都一样):
+
+extension=redis.so
+
+二、安装redis
+
+*1，下载redis
+
+# wget http://redis.googlecode.com/files/redis-2.4.17.tar.gz
+
+*2，安装
+
+# cd ./redis-NN
+
+# make
+
+这样就将redis安装好了
+
+可以通过/src/redis-server打开redis
+
+三、将php扩展redis模块
+
+*1，到https://github.com/nicolasff/phpredis/下载phpredis最新版
+
+*2，将刚下好的压缩包解压到php源码目录下的ext中，即/home/xxx/php-NN/ext/phpredis
+
+# mv  phpredis-NN  php-NN/ext/phpredis
+
+*3，将phpredis加入php拓展模块
+
+# /usr/local/php/bin/phpize  (如果在编译php时configure没有加足够的参数可能会在目录下缺少phpize)
+
+# ./configure --with-php-config=/usr/local/php/bin/php-config (同样后面参数也很重要)
+
+# make
+
+# make install
+
+*4，重启服务器(apache或nginx)
+
+这样在phpinfo中就能看到redis扩展了
+
+
+
+最后打开redis(/src/redis-server)
+
+用以下代码测试是否可以工作
+
+$redis= newRedis();
+
+$redis->connect('127.0.0.1',6379);
+
+$redis->set('name','xxx');
+
+echo$redis->get('name');
+
+?>
+
+如果遇到Fatal error: Uncaught exception 'RedisException' with message 'Redis server went away'的问题那是因为你没有打开redis
+
+最后祝大家早日解决自己的问题！
+
+Redis 的详细介绍：请点这里
+
+Redis 的下载地址：请点这里
+
+推荐阅读：
+
+https://download.csdn.net/download/missyougoon/9297993?spm=1001.2101.3001.5697
+
+
