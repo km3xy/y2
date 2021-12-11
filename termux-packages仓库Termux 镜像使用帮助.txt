@@ -1,0 +1,48 @@
+github-termux-packages仓库
+
+里面能能看到配置文件
+
+https://github.com/termux/termux-packages/tree/master/packages/php-redis
+
+
+https://github.com/termux/termux-packages/blob/master/packages/php-redis/build.sh
+
+
+https://github.com/termux/termux-packages/tree/master/packages/redis
+
+
+
+
+https://github.com/termux/termux-packages/tree/master/packages
+
+北京大学外国语源镜像里下载，termux/下面的扩展
+
+里面看不到配置文件
+
+
+https://mirrors.bfsu.edu.cn/help/termux/
+
+
+https://mirrors.bfsu.edu.cn/termux下面的/扩展库
+
+
+https://mirrors.bfsu.edu.cn/termux/game-packages-24
+
+
+Termux 镜像使用帮助
+
+
+
+https://mirrors.bfsu.edu.cn/help/termux/
+
+如何使用 Termux 镜像
+图形界面（TUI）替换
+在较新版的 Termux 中，官方提供了图形界面（TUI）来半自动替换镜像，推荐使用该种方式以规避其他风险。 在 Termux 中执行如下命令
+
+termux-change-repo
+在图形界面引导下，使用自带方向键可上下移动。
+第一步使用空格选择需要更换的仓库，之后在第二步选择 TUNA/BFSU 镜像源。确认无误后回车，镜像源会自动完成更换。
+
+
+
+
